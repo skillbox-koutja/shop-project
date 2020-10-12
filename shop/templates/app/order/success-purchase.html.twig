@@ -1,0 +1,13 @@
+{% extends 'app/home.html.twig' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block body %}
+    <section class="shop-page__popup-end">
+        <div class="shop-page__wrapper shop-page__wrapper--popup-end">
+            <h2 class="h h--1 h--icon shop-page__end-title">Спасибо за заказ!</h2>
+            <p class="shop-page__end-message">Ваш заказ успешно оформлен, с вами свяжутся в ближайшее время</p>
+            <a href="{{ path('home') }}" class="button">Продолжить покупки</a>
+        </div>
+    </section>
+{% endblock %}

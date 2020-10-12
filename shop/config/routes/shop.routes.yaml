@@ -1,0 +1,11 @@
+home:
+  path: /{preset}
+  controller: App\Controller\Shop\HomeController::index
+  defaults:
+    preset: null
+
+shop_orders_purchase:
+  path: /orders/purchase/{id}
+  controller: App\Controller\Shop\OrdersController::purchase
+  defaults:
+    preset: null

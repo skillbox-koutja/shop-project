@@ -1,0 +1,21 @@
+<header class="page-header">
+    <a class="page-header__logo" href="#">
+        <img src="{{ asset('img/logo.svg') }}" alt="Fashion">
+    </a>
+    <nav class="page-header__menu">
+        <ul class="main-menu main-menu--header">
+            <li>
+                <a class="main-menu__item" href="{{ path('home') }}">Главная</a>
+            </li>
+            <li>
+                <a class="main-menu__item" href="{{ path('home', {'preset': 'new'}) }}">Новинки</a>
+            </li>
+            <li>
+                <a class="main-menu__item" href="{{ path('home', {'preset': 'sale'}) }}">Sale</a>
+            </li>
+            <li>
+                <a class="main-menu__item active">Доставка</a>
+            </li>
+        </ul>
+    </nav>
+</header>

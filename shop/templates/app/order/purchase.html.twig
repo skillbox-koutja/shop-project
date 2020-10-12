@@ -1,0 +1,114 @@
+{% extends 'app/home.html.twig' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block body %}
+    <section class="shop-page__order">
+        <div class="shop-page__wrapper">
+            <h2 class="h h--1">Оформление заказа</h2>
+            {{ form_start(form, {'attr': {'class': 'custom-form js-order'}}) }}
+            <fieldset class="custom-form__group">
+                <legend class="custom-form__title">Укажите свои личные данные</legend>
+                <p class="custom-form__info">
+                    <span class="req">*</span> поля обязательные для заполнения
+                </p>
+                <div class="custom-form__row">
+                    <div class="custom-form__column">
+                        <div class="custom-form__input-wrapper">
+                            {{ form_label(form.lastName, 'Фамилия*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                            {{ form_widget(form.lastName, {'attr': {'class': 'custom-form__input'}}) }}
+                            {{ form_errors(form.lastName) }}
+                        </div>
+                        <div class="custom-form__input-wrapper">
+                            {{ form_label(form.firstName, 'Имя*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                            {{ form_widget(form.firstName, {'attr': {'class': 'custom-form__input'}}) }}
+                            {{ form_errors(form.firstName) }}
+                        </div>
+                        <div class="custom-form__input-wrapper">
+                            {{ form_label(form.patronymic, 'Отчество', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                            {{ form_widget(form.patronymic, {'attr': {'class': 'custom-form__input'}}) }}
+                            {{ form_errors(form.patronymic) }}
+                        </div>
+                    </div>
+                    <div class="custom-form__column">
+                        <div class="custom-form__input-wrapper">
+                            {{ form_label(form.phone, 'Телефон*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                            {{ form_widget(form.phone, {'attr': {'class': 'custom-form__input'}}) }}
+                            {{ form_errors(form.phone) }}
+                        </div>
+                        <div class="custom-form__input-wrapper">
+                            {{ form_label(form.email, 'Почта*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'custom-form__input'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="custom-form__input-wrapper js-radio">
+                <legend class="custom-form__title custom-form__title--radio">Способ доставки</legend>
+                {{ form_widget(form.deliveryMethodType, {'attr': {'class': 'delivery-method-type'}}) }}
+            </div>
+            <div class="shop-page__delivery shop-page__delivery--no">
+                <table class="custom-table">
+                    <caption class="custom-table__title">Пункт самовывоза</caption>
+                    <tr>
+                        <td class="custom-table__head">Адрес:</td>
+                        <td>Москва г, Тверская ул,<br> 4 Метро «Охотный ряд»</td>
+                    </tr>
+                    <tr>
+                        <td class="custom-table__head">Время работы:</td>
+                        <td>пн-вс 09:00-22:00</td>
+                    </tr>
+                    <tr>
+                        <td class="custom-table__head">Оплата:</td>
+                        <td>Наличными или банковской картой</td>
+                    </tr>
+                    <tr>
+                        <td class="custom-table__head">Срок доставки:</td>
+                        <td class="date">{{deliveryDate.min}}—{{deliveryDate.max}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="shop-page__delivery shop-page__delivery--yes" hidden="">
+                <fieldset class="custom-form__group">
+                    <legend class="custom-form__title">Адрес</legend>
+                    <p class="custom-form__info">
+                        <span class="req">*</span> поля обязательные для заполнения
+                    </p>
+                    <div class="custom-form__input-wrapper">
+                        {{ form_label(form.city, 'Город*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                        {{ form_widget(form.city, {'attr': {'class': 'custom-form__input'}}) }}
+                        {{ form_errors(form.city) }}
+                    </div>
+                    <div class="custom-form__input-wrapper">
+                        {{ form_label(form.street, 'Улица*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                        {{ form_widget(form.street, {'attr': {'class': 'custom-form__input'}}) }}
+                        {{ form_errors(form.street) }}
+                    </div>
+                    <div class="custom-form__input-wrapper">
+                        {{ form_label(form.house, 'Дом*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                        {{ form_widget(form.house, {'attr': {'class': 'custom-form__input'}}) }}
+                        {{ form_errors(form.house) }}
+                    </div>
+                    <div class="custom-form__input-wrapper">
+                        {{ form_label(form.apartment, 'Квартира*', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                        {{ form_widget(form.apartment, {'attr': {'class': 'custom-form__input'}}) }}
+                        {{ form_errors(form.apartment) }}
+                    </div>
+                </fieldset>
+            </div>
+            <div class="custom-form__input-wrapper">
+                <legend class="custom-form__title custom-form__title--radio">Способ оплаты</legend>
+                {{ form_widget(form.paymentMethodId) }}
+            </div>
+            <div class="custom-form__input-wrapper">
+                {{ form_label(form.note, 'Комментарии к заказу', {'label_attr': {'class': 'custom-form__input-label custom-form__title'}}) }}
+                {{ form_widget(form.note, {'attr': {'class': 'custom-form__textarea'}}) }}
+                {{ form_errors(form.note) }}
+            </div>
+            <input type="hidden" name="token" value="{{ csrf_token('purchase') }}"/>
+            <button class="button" type="submit">Отправить заказ</button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

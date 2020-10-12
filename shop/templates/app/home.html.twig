@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fashion{% endblock %}
+
+{% block header %}
+    {{ include('app/header/shop.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <main class="shop-page">
+        <header class="intro">
+            <div class="intro__wrapper">
+                <h1 class=" intro__title">COATS</h1>
+                <p class="intro__info">Collection 2020</p>
+            </div>
+        </header>
+        <section class="shop container">
+            <section class="shop__filter filter">
+                <form class="shop__filter filter-form">
+                    <div class="filter__wrapper">
+                        {{ category_list(category, categories) }}
+                    </div>
+                    <div class="filter__wrapper">
+                        <b class="filter__title">Фильтры</b>
+                        <div class="filter__range range">
+                            <span class="range__info">Цена</span>
+                            <div class="range__line" aria-label="Range Line"></div>
+                            <div class="range__res">
+                                <span class="range__res-item min-price"
+                                      data-value="{{ slider.minPrice }}"
+                                      data-limit="{{ minPrice }}">
+                                    {{ slider.minPrice|number_format(0, '.', '') }} руб.
+                                </span>
+                                <span class="range__res-item max-price"
+                                      data-value="{{ slider.maxPrice }}"
+                                      data-limit="{{ maxPrice }}">
+                                    {{ slider.maxPrice|number_format(0, '.', '') }} руб.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <fieldset class="custom-form__group">
+                        <input type="checkbox"
+                               name="new"
+                               id="new"
+                               {% if new %}checked{% endif %}
+                               class="custom-form__checkbox">
+                        <label for="new"
+                               class="custom-form__checkbox-label custom-form__info"
+                               style="display: block;">Новинка
+                        </label>
+                        <input type="checkbox"
+                               name="sale"
+                               id="sale"
+                               {% if sale %}checked{% endif %}
+                               class="custom-form__checkbox">
+                        <label for="sale"
+                               class="custom-form__checkbox-label custom-form__info"
+                               style="display: block;">Распродажа
+                        </label>
+                    </fieldset>
+                    <button class="button apply-filter" type="submit" style="width: 100%">Применить</button>
+                </form>
+            </section>
+
+            <div class="shop__wrapper">
+                {{ form_start(sorterForm, {'attr': {'class': 'shop__sorting'}}) }}
+                <div class="shop__sorting-item custom-form__select-wrapper">
+                    {{ form_widget(sorterForm.field, {'attr': {'class': 'custom-form__select sorting-field'}}) }}
+                </div>
+                <div class="shop__sorting-item custom-form__select-wrapper">
+                    {{ form_widget(sorterForm.order, {'attr': {'class': 'custom-form__select sorting-order'}}) }}
+                </div>
+                <p class="shop__sorting-res">Найдено <span class="res-sort">{{ total }}</span> моделей</p>
+                {{ form_end(sorterForm) }}
+
+                <section class="shop__list">
+                    {% for product in pagination %}
+                        <a class="shop__item product" href={{ path('shop_orders_purchase', {'id': product.id}) }}>
+                            <div class="product__image">
+                                <img src="{{ storage_path(product.photo_path ~ '/' ~ product.photo_title) }}"
+                                     alt="{{ product.photo_title }}"/>
+                            </div>
+                            <p class="product__name">{{ product.title }}</p>
+                            <span class="product__price">{{ product.price|number_format(0, '.', ' ') }} руб.</span>
+                        </a>
+                    {% endfor %}
+                </section>
+                <div class="shop__paginator">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

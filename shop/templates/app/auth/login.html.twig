@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Авторизация{% endblock %}
+
+{% block body %}
+    <main class="page-authorization">
+        <h1 class="h h--1">Авторизация</h1>
+        <form class="custom-form" method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <label for="inputEmail" class="sr-only">Эл. почта</label>
+            <input type="email" value="{{ last_username }}"
+                   name="email"
+                   id="inputEmail"
+                   class="custom-form__input form-control"
+                   placeholder="Эл. почта"
+                   required autofocus>
+            <label for="inputPassword" class="sr-only">Пароль</label>
+            <input type="password"
+                   name="password"
+                   id="inputPassword"
+                   class="custom-form__input form-control"
+                   placeholder="Пароль"
+                   required>
+
+            <input type="hidden"
+                   name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
+
+            <button class="button btn btn-lg btn-primary" type="submit">
+                Войти в личный кабинет
+            </button>
+        </form>
+    </main>
+{% endblock %}

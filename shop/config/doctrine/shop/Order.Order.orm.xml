@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Model\Shop\Entity\Order\Order" table="shop_orders">
+    <id name="id" type="shop_order_id" column="id">
+      <generator strategy="NONE"/>
+      <sequence-generator sequence-name="s_shop_order"/>
+    </id>
+    <field name="progress" column="progress" type="integer"/>
+    <field name="status" column="status" type="shop_order_status"/>
+    <field name="created" column="created" type="datetime_immutable"/>
+    <field name="cost" column="cost" type="integer"/>
+    <many-to-many field="products" target-entity="App\Model\Shop\Entity\Product\Product">
+      <join-table name="shop_order_items" >
+        <join-columns>
+          <join-column name="order_id" referenced-column-name="id" nullable="false" />
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="product_id" referenced-column-name="id" nullable="false"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-one field="paymentMethod" target-entity="App\Model\Shop\Entity\Payment\Method\Method">
+      <join-columns>
+        <join-column name="payment_method_id" referenced-column-name="id" nullable="false" />
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="deliveryMethod" target-entity="App\Model\Shop\Entity\Delivery\Method\Method">
+      <join-columns>
+        <join-column name="delivery_method_id" referenced-column-name="id" nullable="false" />
+      </join-columns>
+    </many-to-one>
+    <field name="note" type="text" nullable="true"/>
+    <embedded name="customer"
+              class="App\Model\Shop\Entity\Order\Customer\Data"
+              column-prefix="customer_"/>
+    <field name="version" type="integer" column="version" precision="0" scale="0" nullable="false" version="true"/>
+  </entity>
+</doctrine-mapping>
+

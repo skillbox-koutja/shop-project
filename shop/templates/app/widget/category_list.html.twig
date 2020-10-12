@@ -1,0 +1,10 @@
+<b class="filter__title">Категории</b>
+<ul class="filter__list">
+    {% for item in categories %}
+        {% if category == item['id'] %}
+            <li class="filter__list-item active" data-value={{ item['id'] }}>{{ item['title'] }}</li>
+        {% else %}
+            <li class="filter__list-item" data-value={{ item['id'] }}>{{ item['title'] }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>

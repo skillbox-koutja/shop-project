@@ -1,0 +1,17 @@
+{% if status == 'undone' %}
+    <form action="{{ path('admin_shop_orders_change_status', {'id': id}) }}"
+          style="display: inline-block"
+          method="post">
+        <input type="hidden" name="status" value="done"/>
+        <input type="hidden" name="token" value="{{ csrf_token('change_status') }}"/>
+        <button type="submit" class="order-item__btn">Изменить</button>
+    </form>
+{% elseif status == 'done' %}
+    <form action="{{ path('admin_shop_orders_change_status', {'id': id}) }}"
+          style="display: inline-block"
+          method="post">
+        <input type="hidden" name="status" value="undone"/>
+        <input type="hidden" name="token" value="{{ csrf_token('change_status') }}"/>
+        <button type="submit" class="order-item__btn">Изменить</button>
+    </form>
+{% endif %}

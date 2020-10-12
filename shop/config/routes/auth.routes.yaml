@@ -1,0 +1,9 @@
+app_login:
+  path: /login
+  controller: App\Controller\Auth\AuthController::login
+app_logout:
+  path: /logout
+  controller: App\Controller\Auth\AuthController::logout
+  methods: GET
+
+

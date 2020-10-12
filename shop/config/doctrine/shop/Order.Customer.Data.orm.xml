@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <embeddable name="App\Model\Shop\Entity\Order\Customer\Data">
+    <field name="email" type="string" column="email" nullable="false"/>
+    <field name="phone" type="string" column="phone" nullable="false"/>
+    <field name="name" type="string" column="name" nullable="false"/>
+    <field name="city" type="string" column="city" nullable="true"/>
+    <field name="street" type="string" column="street" nullable="true"/>
+    <field name="house" type="string" column="house" nullable="true"/>
+    <field name="apartment" type="string" column="apartment" nullable="true"/>
+  </embeddable>
+</doctrine-mapping>
+

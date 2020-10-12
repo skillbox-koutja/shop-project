@@ -1,0 +1,46 @@
+{% extends 'app/admin.html.twig' %}
+
+{% block title %}Добавление товара{% endblock %}
+
+{% block body %}
+    <main class="page-add">
+        <h1 class="h h--1">Добавление товара</h1>
+        {{ form_start(form, {'attr': {'class': 'custom-form'}}) }}
+        <fieldset class="page-add__group custom-form__group">
+            <legend class="page-add__small-title custom-form__title">Данные о товаре</legend>
+            <div class="custom-form__input-wrapper page-add__first-wrapper">
+                {{ form_label(form.title, 'Название товара', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'custom-form__input'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+            <div class="custom-form__input-wrapper">
+                {{ form_label(form.price, 'Цена товара', {'label_attr': {'class': 'custom-form__input-label'}}) }}
+                {{ form_widget(form.price, {'attr': {'class': 'custom-form__input'}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+        </fieldset>
+        <fieldset class="page-add__group custom-form__group">
+            <legend class="page-add__small-title custom-form__title">Фотография товара</legend>
+            <ul class="add-list">
+                <li class="add-list__item add-list__item--add">
+                    {{ form_label(form.photo, 'Добавить фотографию') }}
+                    {{ form_widget(form.photo, {'attr': {'class': 'custom-form__input product-photo-input', 'hidden': true}}) }}
+                </li>
+            </ul>
+            {{ form_errors(form.photo) }}
+        </fieldset>
+        <fieldset class="page-add__group custom-form__group">
+            <legend class="page-add__small-title custom-form__title">Раздел</legend>
+            <div class="page-add__select">
+                {{ form_widget(form.categories, {'attr': {'class': 'custom-form__select'}}) }}
+            </div>
+            {{ form_widget(form.new, {'attr': {'class': 'custom-form__checkbox'}}) }}
+            {{ form_label(form.new, 'Новинка', {'label_attr': {'class': 'custom-form__checkbox-label'}}) }}
+
+            {{ form_widget(form.sale, {'attr': {'class': 'custom-form__checkbox'}}) }}
+            {{ form_label(form.sale, 'Распродажа', {'label_attr': {'class': 'custom-form__checkbox-label'}}) }}
+        </fieldset>
+        <button class="button" type="submit">Добавить товар</button>
+        {{ form_end(form) }}
+    </main>
+{% endblock %}

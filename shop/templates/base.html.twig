@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="Fashion - интернет-магазин">
+    <meta name="keywords" content="Fashion, интернет-магазин, одежда, аксессуары">
+    <meta name="theme-color" content="#393939">
+
+    <link rel="preload" href="{{asset('fonts/opensans-400-normal.woff2')}}" as="font">
+    <link rel="preload" href="{{asset('fonts/roboto-400-normal.woff2')}}" as="font">
+    <link rel="preload" href="{{asset('fonts/roboto-700-normal.woff2')}}" as="font">
+
+    <link rel="icon" href="{{asset('img/favicon.png')}}">
+    <link rel="stylesheet" href="{{asset('css/style.min.css')}}">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{asset('js/scripts.js')}}" defer=""></script>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block header %}
+{% endblock %}
+
+{% include '_flashes.html.twig' %}
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+    {{ include('app/footer.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

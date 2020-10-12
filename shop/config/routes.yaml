@@ -1,0 +1,10 @@
+auth:
+  resource: 'routes/auth.routes.yaml'
+  type: yaml
+admin_shop:
+  resource: 'routes/admin_shop.routes.yaml'
+  prefix: /admin
+  type: yaml
+shop:
+  resource: 'routes/shop.routes.yaml'
+  type: yaml

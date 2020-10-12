@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Model\User\Entity\User\User" table="user_users">
+    <unique-constraints>
+      <unique-constraint name="0" columns="email"/>
+    </unique-constraints>
+    <id name="id" type="user_user_id" column="id"/>
+    <field name="date" type="datetime_immutable" column="date" precision="0" scale="0" nullable="false"/>
+    <field name="email" type="user_user_email" column="email" precision="0" scale="0" nullable="true"/>
+    <field name="passwordHash" type="string" column="password_hash" precision="0" scale="0" nullable="true"/>
+    <field name="status" type="string" column="status" length="16" precision="0" scale="0" nullable="false"/>
+    <field name="role" type="user_user_role" column="role" length="16" precision="0" scale="0" nullable="false"/>
+    <field name="version" type="integer" column="version" precision="0" scale="0" nullable="false" version="true"/>
+    <embedded name="name" class="App\Model\User\Entity\User\Name" column-prefix="name_"/>
+  </entity>
+</doctrine-mapping>

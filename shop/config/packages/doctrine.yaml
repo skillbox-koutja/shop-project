@@ -1,0 +1,47 @@
+parameters:
+  # Adds a fallback DATABASE_URL if the env var is not set.
+  # This allows you to run cache:warmup even if your
+  # environment variables are not available yet.
+  # You should not need to change this value.
+  env(DATABASE_URL): ''
+
+doctrine:
+  dbal:
+    # configure these for your database server
+    driver: 'pdo_pgsql'
+    server_version: '11.2'
+    charset: utf8
+    default_table_options:
+      charset: utf8
+      collate: ~
+    url: '%env(resolve:DATABASE_URL)%'
+    schema_filter: '~^(?!s_shop_order|s_shop_product)~'
+    types:
+      user_user_id: 'App\Model\User\Entity\User\IdType'
+      user_user_email: 'App\Model\User\Entity\User\EmailType'
+      user_user_role: 'App\Model\User\Entity\User\RoleType'
+      shop_category_id: 'App\Model\Shop\Entity\Category\IdType'
+      shop_product_id: 'App\Model\Shop\Entity\Product\IdType'
+      shop_product_photo_id: 'App\Model\Shop\Entity\Product\Photo\IdType'
+      shop_order_id: 'App\Model\Shop\Entity\Order\IdType'
+      shop_order_status: 'App\Model\Shop\Entity\Order\StatusType'
+      shop_delivery_method_id: 'App\Model\Shop\Entity\Delivery\Method\IdType'
+      shop_delivery_method_type: 'App\Model\Shop\Entity\Delivery\Method\TypeType'
+      shop_payment_method_id: 'App\Model\Shop\Entity\Payment\Method\IdType'
+  orm:
+    auto_generate_proxy_classes: true
+    naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+    auto_mapping: true
+    mappings:
+      User:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/config/doctrine/user'
+        prefix: 'App\Model\User\Entity\User'
+        alias: User
+      Shop:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/config/doctrine/shop'
+        prefix: 'App\Model\Shop\Entity'
+        alias: Shop

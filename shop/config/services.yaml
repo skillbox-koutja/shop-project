@@ -1,0 +1,36 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  App\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Migrations/'
+      - '../src/Model/User/Entity/'
+      - '../src/Kernel.php'
+      - '../src/Tests/'
+  App\Controller\:
+    resource: '../src/Controller/'
+    tags: [ 'controller.service_arguments' ]
+  App\Service\Uploader\FileUploader:
+    arguments: [ '@default.storage', '%env(STORAGE_BASE_URL)%' ]
+  Redis:
+    class: Redis
+    calls:
+      - method: connect
+        arguments:
+          - '%env(REDIS_HOST)%'
+      - method: auth
+        arguments:
+          - '%env(REDIS_PASSWORD)%'
+  Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+    arguments:
+      - '@Redis'

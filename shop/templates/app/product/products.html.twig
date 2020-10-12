@@ -1,0 +1,56 @@
+{% extends 'app/admin.html.twig' %}
+
+{% block title %}Товары{% endblock %}
+
+{% block body %}
+    <main class="page-products">
+        <h1 class="h h--1">Товары</h1>
+        {# <a class="page-products__button button" href="{{ path('admin_shop_products_edit_product') }}">Добавить товар</a> #}
+        <a class="page-products__button button" href="{{ path('admin_shop_products_new') }}">Добавить товар</a>
+
+        <div class="page-products__header">
+            <span class="page-products__header-field">Название товара</span>
+            <span class="page-products__header-field">ID</span>
+            <span class="page-products__header-field">Цена</span>
+            <span class="page-products__header-field">Категория</span>
+            <span class="page-products__header-field">Новинка</span>
+        </div>
+        <ul class="page-products__list">
+            {% for product in pagination %}
+                <li class="product-item page-products__item">
+                    <b class="product-item__name">
+                        <a href="{{ path('admin_shop_products_edit', {'id': product.id}) }}"
+                           aria-label="Редактировать"
+                        >
+                        {{ product.title }}
+                    </a>
+                    </b>
+                    <span class="product-item__field">{{ product.id }}</span>
+                    <span class="product-item__field">{{ product.price|number_format(0, '.', ' ') }} руб.</span>
+                    <span class="product-item__field">
+                        {% for category in product.categories %}
+                            {{ category.title }}<br>
+                        {% endfor %}
+                    </span>
+                    <span class="product-item__field">
+                        {% if true == product.new %}
+                            Да
+                        {% else %}
+                            Нет
+                        {% endif %}
+                    </span>
+                    <a href="{{ path('admin_shop_products_edit', {'id': product.id}) }}"
+                       class="product-item__edit"
+                       aria-label="Редактировать"></a>
+                    <form action="{{ path('admin_shop_products_remove', {'id': product.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                        <button type="submit" class="product-item__delete"></button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="shop__paginator">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </main>
+{% endblock %}

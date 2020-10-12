@@ -1,0 +1,25 @@
+<header class="page-header">
+    <a class="page-header__logo" href="#">
+        <img src="{{ asset('img/logo.svg') }}" alt="Fashion">
+    </a>
+    <nav class="page-header__menu">
+        <ul class="main-menu main-menu--header">
+            <li>
+                <a class="main-menu__item" href="{{ path('home') }}">Главная</a>
+            </li>
+            {% if is_granted('ROLE_SHOP_MANAGE_ORDERS') %}
+                <li>
+                    <a class="main-menu__item" href="{{ path('admin_shop_orders') }}">Заказы</a>
+                </li>
+            {% endif %}
+            {% if is_granted('ROLE_SHOP_MANAGE_PRODUCTS') %}
+                <li>
+                    <a class="main-menu__item" href="{{ path('admin_shop_products') }}">Товары</a>
+                </li>
+            {% endif %}
+            <li>
+                <a class="main-menu__item" href="{{ path('app_logout') }}">Выйти</a>
+            </li>
+        </ul>
+    </nav>
+</header>

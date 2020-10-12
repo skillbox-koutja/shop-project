@@ -1,0 +1,8 @@
+{% if order.delivery_method_type == 'courier' %}
+    <div class="order-item__wrapper">
+        <div class="order-item__group">
+            <span class="order-item__title">Адрес доставки</span>
+            <span class="order-item__info">г. {{ order.customer_city }}, ул. {{ order.customer_street }}, д.{{ order.customer_house }}, кв. {{ order.customer_apartment }}</span>
+        </div>
+    </div>
+{% endif %}

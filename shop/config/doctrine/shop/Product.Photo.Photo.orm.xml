@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Model\Shop\Entity\Product\Photo\Photo" table="shop_product_photo">
+    <id name="id" type="shop_product_photo_id" column="id"/>
+    <embedded name="info"
+              class="App\Model\Shop\Entity\Product\Photo\Info"
+              column-prefix="photo_"/>
+    <one-to-one field="product"
+                target-entity="App\Model\Shop\Entity\Product\Product"
+                inversed-by="photo"/>
+  </entity>
+</doctrine-mapping>
+

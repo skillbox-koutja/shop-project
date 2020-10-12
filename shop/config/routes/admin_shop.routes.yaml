@@ -1,0 +1,27 @@
+admin_home:
+  path: /
+  controller: App\Controller\Shop\AdminController::index
+
+admin_shop_orders:
+  path: /orders
+  controller: App\Controller\Shop\OrdersController::index
+admin_shop_orders_change_status:
+  path: /orders/{id}/status/change
+  controller: App\Controller\Shop\OrdersController::changeStatus
+
+
+admin_shop_products:
+  path: /products
+  controller: App\Controller\Shop\ProductsController::index
+admin_shop_products_new:
+  path: /products/new
+  controller: App\Controller\Shop\ProductsController::create
+admin_shop_products_edit:
+  path: /products/{id}/edit
+  controller: App\Controller\Shop\ProductsController::edit
+admin_shop_products_remove:
+  path: /products/{id}/remove
+  controller: App\Controller\Shop\ProductsController::remove
+admin_shop_products_edit_product:
+  path: /products/edit_product
+  controller: App\Controller\Shop\ProductsController::edit_product

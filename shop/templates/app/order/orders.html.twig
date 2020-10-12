@@ -1,0 +1,63 @@
+{% extends 'app/admin.html.twig' %}
+
+{% block title %}Список заказов{% endblock %}
+
+{% block body %}
+    <main class="page-order">
+        <h1 class="h h--1">Список заказов</h1>
+        {% if total == 0 %}
+            <div>Нет заказов</div>
+        {% else %}
+        <ul class="page-order__list">
+            {% for order in pagination %}
+                <li class="order-item page-order__item">
+                    <div class="order-item__wrapper">
+                        <div class="order-item__group order-item__group--id">
+                            <span class="order-item__title">Номер заказа</span>
+                            <span class="order-item__info order-item__info--id">{{ order.id }}</span>
+                        </div>
+                        <div class="order-item__group">
+                            <span class="order-item__title">Сумма заказа</span>
+                            {{ order.cost|number_format(0, '.', ' ') }} руб.
+                        </div>
+                        <button class="order-item__toggle"></button>
+                    </div>
+                    <div class="order-item__wrapper">
+                        <div class="order-item__group order-item__group--margin">
+                            <span class="order-item__title">Заказчик</span>
+                            <span class="order-item__info">{{ order.customer_name }}</span>
+                        </div>
+                        <div class="order-item__group">
+                            <span class="order-item__title">Номер телефона</span>
+                            <span class="order-item__info">{{ order.customer_phone }}</span>
+                        </div>
+                        <div class="order-item__group">
+                            <span class="order-item__title">Способ доставки</span>
+                            <span class="order-item__info">{{ order.delivery_method }}</span>
+                        </div>
+                        <div class="order-item__group">
+                            <span class="order-item__title">Способ оплаты</span>
+                            <span class="order-item__info">{{ order.payment_method }}</span>
+                        </div>
+                        <div class="order-item__group order-item__group--status">
+                            <span class="order-item__title">Статус заказа</span>
+                            {{ order_status(order.status)}}
+                            {{ order_toggle_status(order.id, order.status)}}
+                        </div>
+                    </div>
+                    {{ order_address(order) }}
+                    <div class="order-item__wrapper">
+                        <div class="order-item__group">
+                            <span class="order-item__title">Комментарий к заказу</span>
+                            <span class="order-item__info">{{ order.note }}</span>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="shop__paginator">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        {% endif %}
+    </main>
+{% endblock %}
