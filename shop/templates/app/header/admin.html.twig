@@ -1,20 +1,24 @@
 <header class="page-header">
-    <a class="page-header__logo" href="#">
+    <a class="page-header__logo" href="{{ path('home') }}">
         <img src="{{ asset('img/logo.svg') }}" alt="Fashion">
     </a>
+    {% set path = app.request.attributes.get('_route') %}
+    {% set item_cls = 'main-menu__item' %}
     <nav class="page-header__menu">
         <ul class="main-menu main-menu--header">
             <li>
-                <a class="main-menu__item" href="{{ path('home') }}">Главная</a>
+                <a class="{{ item_cls }}" href="{{ path('home') }}">Главная</a>
             </li>
             {% if is_granted('ROLE_SHOP_MANAGE_ORDERS') %}
                 <li>
-                    <a class="main-menu__item" href="{{ path('admin_shop_orders') }}">Заказы</a>
+                    <a class="{{ item_cls }}{% if 'admin_shop_orders' == path %} active{% endif %}"
+                       href="{{ path('admin_shop_orders') }}">Заказы</a>
                 </li>
             {% endif %}
             {% if is_granted('ROLE_SHOP_MANAGE_PRODUCTS') %}
                 <li>
-                    <a class="main-menu__item" href="{{ path('admin_shop_products') }}">Товары</a>
+                    <a class="{{ item_cls }}{% if 'admin_shop_products' == path %} active{% endif %}"
+                       href="{{ path('admin_shop_products') }}">Товары</a>
                 </li>
             {% endif %}
             <li>

@@ -1,20 +1,27 @@
 <header class="page-header">
-    <a class="page-header__logo" href="#">
+    <a class="page-header__logo" href="{{ path('home') }}">
         <img src="{{ asset('img/logo.svg') }}" alt="Fashion">
     </a>
+    {% set path = app.request.attributes.get('_route') %}
+    {% set preset = app.request.get('preset') %}
+    {% set item_cls = 'main-menu__item' %}
     <nav class="page-header__menu">
         <ul class="main-menu main-menu--header">
             <li>
-                <a class="main-menu__item" href="{{ path('home') }}">Главная</a>
+                <a class="{{ item_cls }}{% if preset is empty and 'home' == path %} active{% endif %}"
+                   href="{{ path('home') }}">Главная</a>
             </li>
             <li>
-                <a class="main-menu__item" href="{{ path('home', {'preset': 'new'}) }}">Новинки</a>
+                <a class="{{ item_cls }}{% if 'new' == preset and 'home' == path %} active{% endif %}"
+                   href="{{ path('home', {'preset': 'new'}) }}">Новинки</a>
             </li>
             <li>
-                <a class="main-menu__item" href="{{ path('home', {'preset': 'sale'}) }}">Sale</a>
+                <a class="{{ item_cls }}{% if 'sale' == preset and 'home' == path %} active{% endif %}"
+                   href="{{ path('home', {'preset': 'sale'}) }}">Sale</a>
             </li>
             <li>
-                <a class="main-menu__item active">Доставка</a>
+                <a class="{{ item_cls }}{% if 'shop_delivery' == path %} active{% endif %}"
+                   href="{{ path('shop_delivery') }}">Доставка</a>
             </li>
         </ul>
     </nav>
