@@ -35,13 +35,11 @@ const getState = () => {
 
     return state;
 };
-const reloadHome = (state) => {
-    if (state.waitEditingSorting) {
+const reloadHome = (props) => {
+    if (props.waitEditingSorting) {
         return;
     }
 
-    const filters = getFilters();
-    const props = {...state, ...filters};
     const url = new URL(window.location.origin);
     for (let prop in props) {
         if (props.hasOwnProperty(prop)) {
@@ -81,8 +79,9 @@ if (filterForm) {
     filterForm.addEventListener('submit', evt => {
         evt.preventDefault();
         const state = getState();
-
-        reloadHome(state);
+        const filters = getFilters();
+        const props = {...state, ...filters};
+        reloadHome(props);
     });
 }
 
@@ -94,7 +93,10 @@ const hideSortOptions = e => {
     el.hide();
 };
 const changeSortOptions = () => {
-    reloadHome(getState());
+    const state = getState();
+    const filters = getFilters();
+    const props = {...state, ...filters};
+    reloadHome(props);
 };
 const field = document.querySelector('.sorting-field');
 const order = document.querySelector('.sorting-order');
