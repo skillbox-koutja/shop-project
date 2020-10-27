@@ -94,23 +94,46 @@ class ProductFetcher
         }
 
         if (!empty($filter->categories)) {
-            $qb->innerJoin('p',
-                $helper->tableManyToMany('categories'), 'cp',
-                $expr->eq(
-                    $helper->select('id'),
-                    $helper->selectColumn('cp', 'product_id'),
-                )
-            );
-            $qb->andWhere($expr->eq(
-                $helper->selectColumn('cp', 'category_id'),
-                ':categories',
+            $productId = $helper->selectColumn('cp', 'product_id');
+            $categoriesQb = $conn->createQueryBuilder()
+                ->select($productId)
+                ->from($helper->tableManyToMany('categories'), 'cp')
+                ->groupBy($productId);
+            foreach ($filter->categories as $index => $categoryId) {
+                $key = ":cp_cat{$index}";
+                $productInCategoryQb = $this->productInCategoryQb($helper, $key);
+                $categoriesQb->andWhere(
+                    $expr->in(
+                        $productId,
+                        '(' . $productInCategoryQb ->getSQL(). ')',
+                    )
+                );
+                $qb->setParameter($key, $categoryId);
+            }
+            $qb->andWhere($expr->in(
+                $helper->select('id'),
+                '(' . $categoriesQb ->getSQL(). ')',
             ));
-            $qb->setParameter(':categories', $filter->categories, Connection::PARAM_STR_ARRAY);
         }
 
         $helper->addOrderBy($qb, $sorter);
 
         return $this->paginator->paginate($qb, $page, $size);
+    }
+
+    private function productInCategoryQb(
+        FetcherMetaHelper $helper,
+        $idKey
+    ): QueryBuilder
+    {
+        $qb = $this->connection->createQueryBuilder()
+            ->select('product_id')
+            ->from($helper->tableManyToMany('categories'));
+        $qb->where(
+            $qb->expr()->eq('category_id',$idKey)
+        );
+
+        return $qb;
     }
 
     /**
@@ -237,7 +260,7 @@ class ProductFetcher
                     $helper->selectColumn('cp', 'product_id'),
                 )
             );
-            $qb->andWhere($expr->eq(
+            $qb->andWhere($expr->in(
                 $helper->selectColumn('cp', 'category_id'),
                 ':categories',
             ));
