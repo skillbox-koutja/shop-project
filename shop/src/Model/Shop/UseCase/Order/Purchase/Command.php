@@ -43,7 +43,7 @@ class Command
     /**
      * @Assert\Length(max="500")
      */
-    public string $note;
+    public ?string $note = null;
     /**
      * @Assert\NotBlank()
      */
