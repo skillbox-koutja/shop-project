@@ -26,6 +26,11 @@ class HomeController extends AbstractController
         $this->categoryFetcher = $categoryFetcher;
     }
 
+    public function delivery()
+    {
+        return $this->render('app/delivery.html.twig');
+    }
+
     public function index(
         Request $request,
         ?string $preset = null
@@ -61,10 +66,22 @@ class HomeController extends AbstractController
         if (isset($parameters['category'])) {
             $activeCategory = $this->categoryFetcher->findBySlug($parameters['category']);
             if ($activeCategory) {
-                $filter->categories = [$activeCategory->getId()];
+                $filter->categories[] = $activeCategory->getId();
             }
         } else {
             $parameters['category'] = 'all';
+        }
+        if ($parameters['new']) {
+            $new = $this->categoryFetcher->findBySlug('new');
+            if ($new) {
+                $filter->categories[] = $new->getId();
+            }
+        }
+        if ($parameters['sale']) {
+            $sale = $this->categoryFetcher->findBySlug('sale');
+            if ($sale) {
+                $filter->categories[] = $sale->getId();
+            }
         }
 
         $minPrice = $this->productFetcher->minPrice($filter->categories);
