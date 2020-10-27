@@ -94,11 +94,10 @@ class ProductFetcher
         }
 
         if (!empty($filter->categories)) {
-            $productId = $helper->selectColumn('cp', 'product_id');
-            $categoriesQb = $conn->createQueryBuilder()
-                ->select($productId)
-                ->from($helper->tableManyToMany('categories'), 'cp')
-                ->groupBy($productId);
+            $helperProductCategories = new FetcherMetaHelper($this->productMeta, 'cp');
+            $productId = $helperProductCategories->select('id');
+            $categoriesQb = $helperProductCategories->from($conn->createQueryBuilder())
+                ->select($productId);
             foreach ($filter->categories as $index => $categoryId) {
                 $key = ":cp_cat{$index}";
                 $productInCategoryQb = $this->productInCategoryQb($helper, $key);
